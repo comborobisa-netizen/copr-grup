@@ -73,13 +73,23 @@
            style="padding:12px 25px; background:#25D366; color:white; text-decoration:none; border-radius:30px; font-weight:bold; margin-right:10px;">
            Pesan via WhatsApp
         </a>
-        
-<a href="https://id.shp.ee/o5oZ5TD"
-   target="_blank"
-   rel="noopener noreferrer"
+        <a href="#" onclick="openShopee()" 
    style="padding:12px 25px; background:#ee4d2d; color:white; text-decoration:none; border-radius:30px; font-weight:bold;">
    Pesan via Shopee
 </a>
+
+<script>
+function openShopee() {
+    // Coba buka aplikasi Shopee
+    window.location = "shopee://";
+    
+    // Kalau gagal, arahkan ke web setelah 1 detik
+    setTimeout(function(){
+        window.location = "https://id.shp.ee/o5oZ5TD";
+    }, 1000);
+}
+</script>
+
         
 
     </div>
