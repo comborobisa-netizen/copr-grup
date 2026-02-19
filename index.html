@@ -117,3 +117,125 @@
 
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barokah Custom - Vendor Konveksi</title>
+
+<style>
+body{margin:0;font-family:Arial;background:#f4f6f9;}
+header{background:#111;color:white;padding:40px;text-align:center;}
+button{padding:10px 20px;border:none;border-radius:5px;cursor:pointer;}
+input,textarea{padding:8px;width:100%;margin:5px 0;}
+section{padding:40px;}
+.card{background:white;padding:20px;margin:10px 0;border-radius:10px;}
+.gallery img{width:200px;border-radius:10px;margin:10px;}
+.admin{display:none;}
+.login{display:none;}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Barokah Custom</h1>
+<p>Vendor Konveksi Profesional</p>
+<button onclick="showLogin()">Login</button>
+</header>
+
+<section>
+<h2>🖼️ Galeri Produk</h2>
+<div class="gallery">
+<img src="https://via.placeholder.com/200x200?text=Kemeja">
+<img src="https://via.placeholder.com/200x200?text=Seragam">
+<img src="https://via.placeholder.com/200x200?text=Bordir">
+</div>
+</section>
+
+<section>
+<h2>📦 Form Order</h2>
+<div class="card">
+<input type="text" id="nama" placeholder="Nama">
+<input type="text" id="produk" placeholder="Produk">
+<input type="number" id="jumlah" placeholder="Jumlah">
+<textarea id="catatan" placeholder="Catatan"></textarea>
+<button onclick="buatOrder()">Kirim Order</button>
+</div>
+</section>
+
+<section class="login" id="loginSection">
+<h2>👤 Login</h2>
+<input type="text" id="username" placeholder="Username">
+<input type="password" id="password" placeholder="Password">
+<button onclick="login()">Login</button>
+</section>
+
+<section class="admin" id="adminSection">
+<h2>🧾 Dashboard Admin</h2>
+<div id="orderList"></div>
+<button onclick="logout()">Logout</button>
+</section>
+
+<script>
+
+// SIMPAN ORDER
+function buatOrder(){
+let nama=document.getElementById("nama").value;
+let produk=document.getElementById("produk").value;
+let jumlah=document.getElementById("jumlah").value;
+let catatan=document.getElementById("catatan").value;
+
+let orders=JSON.parse(localStorage.getItem("orders"))||[];
+orders.push({nama,produk,jumlah,catatan,status:"Diproses"});
+localStorage.setItem("orders",JSON.stringify(orders));
+
+alert("Order berhasil dikirim!");
+location.reload();
+}
+
+// LOGIN SYSTEM
+function showLogin(){
+document.getElementById("loginSection").style.display="block";
+}
+
+function login(){
+let user=document.getElementById("username").value;
+let pass=document.getElementById("password").value;
+
+if(user==="admin" && pass==="1234"){
+document.getElementById("adminSection").style.display="block";
+document.getElementById("loginSection").style.display="none";
+loadOrders();
+}else{
+alert("Login gagal!");
+}
+}
+
+function logout(){
+location.reload();
+}
+
+// LOAD ORDER ADMIN
+function loadOrders(){
+let orders=JSON.parse(localStorage.getItem("orders"))||[];
+let output="";
+orders.forEach((o,i)=>{
+output+=`
+<div class="card">
+<b>${o.nama}</b><br>
+Produk: ${o.produk}<br>
+Jumlah: ${o.jumlah}<br>
+Catatan: ${o.catatan}<br>
+Status: ${o.status}
+</div>
+`;
+});
+document.getElementById("orderList").innerHTML=output;
+}
+
+</script>
+
+</body>
+</html>
